@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const { Schema } = mongoose;
-
+//creating Schema
 const userSchema = new Schema({
    name:{
     type:String,
@@ -13,7 +13,6 @@ const userSchema = new Schema({
    email:{
      type:String,
      required:true,
-     unique:true
    },
    date:{
     type:String,
@@ -21,4 +20,4 @@ const userSchema = new Schema({
    }
    
 });
-module.exports=mongoose.model('User',userSchema)
+module.exports=mongoose.model('User',userSchema) //confirmed model based on schema

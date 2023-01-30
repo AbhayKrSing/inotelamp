@@ -9,4 +9,6 @@ MongoConnect();
 app.get('/',(req,res)=>{
     res.send('hello')
 })
-app.listen(80)
+app.listen(5000,()=>{
+    console.log('listening backend at port 5000')
+})

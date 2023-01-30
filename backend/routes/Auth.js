@@ -5,24 +5,42 @@ const User = require('../models/User.js')
 const express = require('express')
 router = express.Router()
 
-//Create a User using:POST "/api/auth".Doesn't require Auth
-router.post('/', [
-    body('name','Write a valid name').isAlpha(),
-    body('email',"Write a valid email address").isEmail(),
-    body('password','Write a password whose length must be till 8 letters').isLength({ min: 8 })
-], (req, res) => {
+//Create a User using:POST "/api/auth".No login required
+router.post('/createuser', [
+    body('name', 'Write a valid name').isAlpha('en-US',{ignore: " "}),             //adding express-validator
+    body('email', "Write a valid email address").isEmail(),
+    body('password', 'Write a password whose length must be till 8 letters').isLength({ min: 8 })
+], async (req, res) => {
+    //if express-validator founds error ,errors.isEmpty() becomes false and code inside it runs and code will end with error response.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()});
+        return res.status(400).json({ errors: errors.array()});     //expres-validator error syntax
     }
-    user = new User(req.body)
-    user.save().then((value) => {
-        res.json(value)
+    
+    try { //checking if email already exists
+        user=await User.findOne({email : req.body.email})
+        if(user){
+            return res.status(400).json({error:'This email already exists'})
+        }
+        //Saving data to database
+        user = new User(req.body)
+        data= await user.save()
+        res.send(data)
         console.log('data saved')
-    }).catch((err) => {
-        console.log(err.message)
-        res.status(400).send('Write unique email address')
-    })
+    
+    } catch (error) {
+        console.log(error.message)
+        res.send(400).send('Some error occured')
+    }
+
+    // .then((value) => {
+    //     res.json(value)
+    //     console.log('data saved')
+    // })
+    // .catch((err) => {
+    //     console.log(err.message)
+    //     res.status(400).send('Write unique email address')
+    // })
 })
 module.exports = router
 

@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 const { body, validationResult } = require('express-validator');
 mongoose.set('strictQuery', true)
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User.js')
 const express = require('express')
 router = express.Router()
-
+const JWT_seceret='Helloifavmovieisteth$dam' //ideally it must be in local environment(env.local)
 //Create a User using:POST "/api/auth".No login required
 router.post('/createuser', [
     body('name', 'Write a valid name').isAlpha('en-US', { ignore: " " }),             //adding express-validator
@@ -27,15 +28,20 @@ router.post('/createuser', [
         // var salt =await bcrypt.genSalt(10);  //It is promise
         var secpass = bcrypt.hashSync(req.body.password, salt);   //synchronous
         // var secpass = await bcrypt.hash(req.body.password, salt);  ////It is promise
-        req.body.password=secpass
+        req.body.password = secpass
         //Saving data to database
         user = new User(req.body)
-        data = await user.save()
-        console.log(data)
-        res.send(data)
+        user = await user.save()
+        console.log(user)
+        console.log('data saved')
+        data={
+            id:user.id
+        }
+        const authtoken = jwt.sign(data, JWT_seceret); //jwt is json web token (please visit website for more details or refer harry video)
+          res.json({authtoken})
     } catch (error) {
         console.log(error.message)
-        res.send(400).send('Some error occured')
+        res.status(400).send('Some error occured')
     }
 
     // .then((value) => {

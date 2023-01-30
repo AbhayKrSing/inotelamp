@@ -25,8 +25,8 @@ router.post('/createuser', [
         }
         var salt = bcrypt.genSaltSync(10);    //synchronous
         // var salt =await bcrypt.genSalt(10);  //It is promise
-        var secpass = bcrypt.hashSync("B4c0/\/", salt);   //synchronous
-        // var secpass = await bcrypt.hash("B4c0/\/", salt);  ////It is promise
+        var secpass = bcrypt.hashSync(req.body.password, salt);   //synchronous
+        // var secpass = await bcrypt.hash(req.body.password, salt);  ////It is promise
         req.body.password=secpass
         //Saving data to database
         user = new User(req.body)

@@ -1,12 +1,14 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 const { body, validationResult } = require('express-validator');
 mongoose.set('strictQuery', true)
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User.js')
+const fetchuser = require('../middleware/fetchuser.js')
 const express = require('express')
 router = express.Router()
-const JWT_seceret = 'Helloifavmovieisteth$dam' //ideally it must be in local environment(env.local)
+ //ideally it must be in local environment(env.local)
 //Route 1)Create a User using:- using POST "/api/auth/createuser"(No login required)
 router.post('/createuser', [
     body('name', 'Write a valid name').isAlpha('en-US', { ignore: " " }),             //adding express-validator
@@ -37,7 +39,7 @@ router.post('/createuser', [
         data = {
             id: user.id
         }
-        const authtoken = jwt.sign(data, JWT_seceret); //jwt is json web token (please visit website for more details or refer harry video)
+        const authtoken = jwt.sign(data,process.env.JWT_secret_token); //jwt is json web token (please visit website for more details or refer harry video)
         res.json({ authtoken })
     } catch (error) {
         console.log(error.message)
@@ -67,16 +69,16 @@ router.post('/login', [
         if (!user) {
             return res.status(400).json({ error: 'Please login with correct credentials' })
         }
-        let passwordcompare=bcrypt.compareSync(req.body.password,user.password) //synchronous method
-        if(!passwordcompare){
-            return res.status(400).json({error:'Please login with correct credentials'})
+        let passwordcompare = bcrypt.compareSync(req.body.password, user.password) //synchronous method
+        if (!passwordcompare) {
+            return res.status(400).json({ error: 'Please login with correct credentials' })
         }
         // console.log(req.body.password,user.password)
         data = {
             id: user.id
         }
-        const authtoken = jwt.sign(data, JWT_seceret); 
-        res.json({authtoken})
+        const authtoken = jwt.sign(data, process.env.JWT_secret_token);
+        res.json({ authtoken })
     }
     catch (error) {
         console.log(error.message)
@@ -84,12 +86,14 @@ router.post('/login', [
     }
 })
 //Route 3) Login:- using POST "/api/auth/getuser"(login required)
-router.post('/getuser',async(req,res)=>{
+router.post('/getuser', fetchuser, async (req, res) => {
     try {
-     user= await User.findById()    
+        const userId = req.user.id
+        const user = await User.findById(userId).select('-password')
+        res.send(user)
     }
-     catch (error) {
-        
+    catch (error) {
+        if (error) return res.status(500).send('Error in internal server')
     }
 })
 module.exports = router

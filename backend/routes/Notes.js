@@ -37,7 +37,7 @@ router.post('/creatingnotes', fetchuser, [
 router.put('/updatingnotes/:id', fetchuser, async (req, res) => {  //   /:id dynamic endpoint(not fixed)
     try {
         const note = await Note.findById(req.params.id)
-        if (!note) res.status(401).send('Notes not found')
+        if (!note) return res.status(401).send('Notes not found')
         const { title, description, tag } = req.body
         //creating newnote object
         const newnote = {}

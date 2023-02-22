@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <div className='container'>
-        <h1 className="text-center mt-4">Add Notes</h1>
+        <h1 className="text-center mt-4" >Add Notes</h1>
         <form>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>

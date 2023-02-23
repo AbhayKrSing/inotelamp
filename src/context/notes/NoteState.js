@@ -2,12 +2,14 @@ import NoteContext from "./noteContext";
 import { useState } from "react"
 const NoteState = (props) => {
   const [Alert, setAlert] = useState(false)
-
-  let alertEvent = () => {
+  const [message, setmessage] = useState('')
+  let alertEvent = (message) => {
+    setmessage(message)
     setAlert(true)
     setTimeout(() => {
       setAlert(false)
     }, 2000);
+    return message
   }
   const initial_notes = [
     {
@@ -85,8 +87,10 @@ const NoteState = (props) => {
 
   }
   //DELETE note
-  let deletenote=()=>{
-
+  let deletenote=(id)=>{
+   //Todo API call
+    console.log('Notes deleted having '+ id)
+    setnotes(notes.filter((note)=> note._id !==id))
   }
 
 
@@ -100,7 +104,7 @@ const NoteState = (props) => {
     // <NoteContext.Provider value={{state,update}}>
     //update,state (function ,variable) was removed.
 
-    <NoteContext.Provider value={{ notes, setnotes, Alert, setAlert ,alertEvent,addnote,updatenote,deletenote}}>
+    <NoteContext.Provider value={{ notes, setnotes, Alert, setAlert ,alertEvent,addnote,updatenote,deletenote,message}}>
       {props.children}
     </NoteContext.Provider>
   )

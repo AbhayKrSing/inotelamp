@@ -2,6 +2,7 @@ import NoteContext from "./noteContext";
 import { useState } from "react"
 const NoteState = (props) => {
   const [Alert, setAlert] = useState(false)
+
   let alertEvent = () => {
     setAlert(true)
     setTimeout(() => {
@@ -65,6 +66,32 @@ const NoteState = (props) => {
     }
   ]
   const [notes, setnotes] = useState(initial_notes)
+  //ADD note
+   let addnote=(title,description,tag)=>{
+    const note={
+      "_id": "63f60952b56c49fb35c05f70",
+      "user": "63f0d6163262b574112b4da2",
+      "title": title,
+      "description": description,
+      "tag": tag,
+      "date": "Wed Feb 22 2023 16:38:21 GMT+0530 (India Standard Time)",
+      "__v": 0
+    }
+    //TODO Api calls
+    setnotes(notes.concat([note]))
+   }
+  //UPDATE note
+  let updatenote=()=>{
+
+  }
+  //DELETE note
+  let deletenote=()=>{
+
+  }
+
+
+
+
 
   //This is a boiler plate code
   return (
@@ -73,7 +100,7 @@ const NoteState = (props) => {
     // <NoteContext.Provider value={{state,update}}>
     //update,state (function ,variable) was removed.
 
-    <NoteContext.Provider value={{ notes, setnotes, Alert, setAlert ,alertEvent}}>
+    <NoteContext.Provider value={{ notes, setnotes, Alert, setAlert ,alertEvent,addnote,updatenote,deletenote}}>
       {props.children}
     </NoteContext.Provider>
   )

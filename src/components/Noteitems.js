@@ -3,7 +3,7 @@ import NoteContext from '../context/notes/noteContext'
 
 export default function Noteitems(props) {
     const {alertEvent}=useContext(NoteContext)
-    const { title, description } = props.note
+    const { title, description,tag } = props.note
     return (
         <div className="col-4 my-1">
             <div className="card position-relative">
@@ -12,6 +12,7 @@ export default function Noteitems(props) {
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{description}</p>
+                    <p>{tag}</p>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore modi aliquid voluptatibus quod vero nisi commodi atque distinctio reprehenderit ipsam magnam quidem, totam excepturi eligendi? Asperiores molestias totam voluptates natus.</p>
                 </div>
             </div>

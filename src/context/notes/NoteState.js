@@ -3,6 +3,7 @@ import { useState } from "react"
 const NoteState = (props) => {
   const [Alert, setAlert] = useState(false)
   const [message, setmessage] = useState('')
+  // const [dyanmicUpdate, setdyanmicUpdate] = useState({title:'',description:'',tag:''})
   let alertEvent = (message) => {
     setmessage(message)
     setAlert(true)
@@ -63,7 +64,7 @@ const NoteState = (props) => {
     }
   }
   //UPDATE note
-  let updatenote = async ( id,title="Abhay", description='Kumar', tag='personal dark') => {
+  let updatenote = async ( id,title, description, tag) => {
     //localhost:5000/api/notes/updatingnotes/63f33b07900a0a74b0462a28(reference ke liye likha hai bas)
     try {
       const response = await fetch(`${host}updatingnotes/${id}`, {

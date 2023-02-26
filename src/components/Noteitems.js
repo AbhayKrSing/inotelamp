@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import NoteContext from '../context/notes/noteContext'
 
 export default function Noteitems(props) {
-    const { alertEvent, deletenote, updatenote} = useContext(NoteContext)
+    const { alertEvent, deletenote} = useContext(NoteContext)
     const { title, description, tag, _id } = props.note
     return (
         <div className="col-4 my-1">
@@ -14,7 +14,7 @@ export default function Noteitems(props) {
                 }}></i>
                 <i className="fa-solid fa-pen-to-square position-absolute position-absolute top-0 end-0 mx-5 mt-3" onClick={() => {
                     alertEvent('Editing')
-                    updatenote(_id)
+                    props.Modal(props.note)
                 }}></i>
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>

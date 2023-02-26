@@ -11,86 +11,86 @@ const NoteState = (props) => {
     }, 2000);
     return message
   }
-  const initial_notes = [
-    {
-      "_id": "63f334063408be3321aec845",
-      "user": "63f0d6163262b574112b4da2",
-      "title": "Introduction to eye",
-      "description": "Hello i m like horse men",
-      "tag": "Personal",
-      "date": "Mon Feb 20 2023 14:12:50 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "63f3342f3408be3321aec84a",
-      "user": "63f0d6163262b574112b4da2",
-      "title": "full stack webdevloper",
-      "description": "Hello i m ready to learn anything",
-      "tag": "Personal",
-      "date": "Mon Feb 20 2023 14:12:50 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "63f3342f3408be3321aec84c",
-      "user": "63f0d6163262b574112b4da2",
-      "title": "full stack webdevloper",
-      "description": "Hello i m ready to learn anything",
-      "tag": "Personal",
-      "date": "Mon Feb 20 2023 14:12:50 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "63f33b07900a0a74b0462a28",
-      "user": "63f0d6163262b574112b4da2",
-      "title": "Introduction to eye",
-      "description": "Hello i m ready updated updated",
-      "tag": "Personal",
-      "date": "Mon Feb 20 2023 14:48:42 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "63f5f4c4d5fffb41a3375e97",
-      "user": "63f0d6163262b574112b4da2",
-      "title": "full stack webdevloper",
-      "description": "Hello I m ready to fight",
-      "tag": "Personal",
-      "date": "Wed Feb 22 2023 16:25:02 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "63f60952b56c49fb35c05f70",
-      "user": "63f0d6163262b574112b4da2",
-      "title": "full stack webdevloper",
-      "description": "Lets play shadow fight",
-      "tag": "Personal",
-      "date": "Wed Feb 22 2023 16:38:21 GMT+0530 (India Standard Time)",
-      "__v": 0
+  //http://localhost:5000/api/notes/fetchallnotes
+  //GET all notes
+  const host = 'http://localhost:5000/api/notes/'
+  let getallnotes = async () => {
+    const url = `${host}fetchallnotes`;
+    const headers = {
+      'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjBkNjE2MzI2MmI1NzQxMTJiNGRhMiIsImlhdCI6MTY3Njg4MjgyNX0.Ln0PeN_0kR9Q24Rx0tAWn5EBB_-Tlfb0hvGdJw4RviI'
+    };
+    try {
+      const response = await fetch(url, { headers })
+      const savednote = await response.json()
+      return savednote
+    } catch (error) {
+      console.log(error.message)
     }
-  ]
+  }
+  const initial_notes = []
   const [notes, setnotes] = useState(initial_notes)
+
+
   //ADD note
-   let addnote=(title,description,tag)=>{
-    const note={
-      "_id": "63f60952b56c49fb35c05f70",
-      "user": "63f0d6163262b574112b4da2",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "Wed Feb 22 2023 16:38:21 GMT+0530 (India Standard Time)",
-      "__v": 0
-    }
+  let addnote = async (title, description, tag) => {
+    // const note = {
+    //   "_id": "63f60952b56c49fb35c05f70",
+    //   "user": "63f0d6163262b574112b4da2",
+    //   "title": title,                    //isko comment out isliye kar diya kyuki meyne direct saved notes(addnote) ke response ko  setnotes(notes.concate([savednote]))  kar diya hai (codes dekho)
+    //   "description": description,
+    //   "tag": tag,
+    //   "date": "Wed Feb 22 2023 16:38:21 GMT+0530 (India Standard Time)",
+    //   "__v": 0
+    // }
     //TODO Api calls
-    setnotes(notes.concat([note]))
-   }
+    try {
+      const response = await fetch(`${host}creatingnotes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjBkNjE2MzI2MmI1NzQxMTJiNGRhMiIsImlhdCI6MTY3Njg4MjgyNX0.Ln0PeN_0kR9Q24Rx0tAWn5EBB_-Tlfb0hvGdJw4RviI'
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          tag,
+        })
+      })
+      const savednote = await response.json()
+      setnotes(notes.concat([savednote]))
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
   //UPDATE note
-  let updatenote=()=>{
+  let updatenote = (id) => {
 
   }
   //DELETE note
-  let deletenote=(id)=>{
-   //Todo API call
-    console.log('Notes deleted having '+ id)
-    setnotes(notes.filter((note)=> note._id !==id))
+  let deletenote = (id) => {
+    //Todo API call
+    // localhost:5000/api/notes/deletingnotes/63f3342d3408be3321aec848(reference liya hai bas)
+    const url = `${host}/deletingnotes/${id}`;
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjBkNjE2MzI2MmI1NzQxMTJiNGRhMiIsImlhdCI6MTY3Njg4MjgyNX0.Ln0PeN_0kR9Q24Rx0tAWn5EBB_-Tlfb0hvGdJw4RviI',
+        'Content-Type': 'application/json'
+      },
+    };
+
+    fetch(url, requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        setnotes(notes.filter((note) => note._id !== id))
+      })
+      .catch(error => console.error('Error:', error));
+
+
+    console.log('Notes deleted having ' + id)
+
   }
 
 
@@ -103,8 +103,7 @@ const NoteState = (props) => {
     //<NoteContext.Provider value={{state:state,update:update}}> is same as code just below it.
     // <NoteContext.Provider value={{state,update}}>
     //update,state (function ,variable) was removed.
-
-    <NoteContext.Provider value={{ notes, setnotes, Alert, setAlert ,alertEvent,addnote,updatenote,deletenote,message}}>
+    <NoteContext.Provider value={{ notes, setnotes, Alert, setAlert, alertEvent, addnote, updatenote, deletenote, message, getallnotes }}>
       {props.children}
     </NoteContext.Provider>
   )

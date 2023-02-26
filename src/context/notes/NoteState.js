@@ -63,7 +63,7 @@ const NoteState = (props) => {
     }
   }
   //UPDATE note
-  let updatenote = async (title, description, tag, id) => {
+  let updatenote = async ( id,title="Abhay", description='Kumar', tag='personal dark') => {
     //localhost:5000/api/notes/updatingnotes/63f33b07900a0a74b0462a28(reference ke liye likha hai bas)
     try {
       const response = await fetch(`${host}updatingnotes/${id}`, {
@@ -81,12 +81,12 @@ const NoteState = (props) => {
       })
       const updatenote = await response.json()
       console.log(updatenote)       //we will use it
-      //Logic to update(Edit) note on a Client side
+      // Logic to update(Edit) note on a Client side
       for (let i in notes) {
         if (notes[i]._id === id) {
-          i.title = title
-          i.description = description
-          i.tag = tag
+          notes[i].title = title
+          notes[i].description = description
+          notes[i].tag = tag
         }
       }
     }
@@ -114,7 +114,6 @@ const NoteState = (props) => {
     console.log('Notes deleted having ' + id)
 
   }
-
 
 
 

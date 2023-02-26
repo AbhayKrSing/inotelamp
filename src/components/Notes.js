@@ -12,6 +12,7 @@ export default function Notes() {
                 setnotes(newnotes)
             }
             fetchData();
+            // eslint-disable-next-line
         }, []);
     } catch (error) {
         console.log(error.message)

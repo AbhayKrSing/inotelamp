@@ -65,9 +65,11 @@ const NoteState = (props) => {
   //UPDATE note
   let updatenote = (id) => {
 
+
+    
   }
   //DELETE note
-  let deletenote = (id) => {
+  let deletenote = async (id) => {
     //Todo API call
     // localhost:5000/api/notes/deletingnotes/63f3342d3408be3321aec848(reference liya hai bas)
     const url = `${host}/deletingnotes/${id}`;
@@ -79,16 +81,8 @@ const NoteState = (props) => {
       },
     };
 
-    fetch(url, requestOptions)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        setnotes(notes.filter((note) => note._id !== id))
-      })
-      .catch(error => console.error('Error:', error));
-
-
+    await fetch(url, requestOptions)
+    setnotes(notes.filter((note) => note._id !== id))
     console.log('Notes deleted having ' + id)
 
   }

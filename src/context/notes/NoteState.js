@@ -63,15 +63,41 @@ const NoteState = (props) => {
     }
   }
   //UPDATE note
-  let updatenote = (id) => {
+  let updatenote = async (title, description, tag, id) => {
+    //localhost:5000/api/notes/updatingnotes/63f33b07900a0a74b0462a28(reference ke liye likha hai bas)
+    try {
+      const response = await fetch(`${host}updatingnotes/${id}`, {
+        method: "PUT",
+        headers: {
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjBkNjE2MzI2MmI1NzQxMTJiNGRhMiIsImlhdCI6MTY3Njg4MjgyNX0.Ln0PeN_0kR9Q24Rx0tAWn5EBB_-Tlfb0hvGdJw4RviI',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          tag
+        })
 
-
-    
+      })
+      const updatenote = await response.json()
+      console.log(updatenote)       //we will use it
+      //Logic to update(Edit) note on a Client side
+      for (let i in notes) {
+        if (notes[i]._id === id) {
+          i.title = title
+          i.description = description
+          i.tag = tag
+        }
+      }
+    }
+    catch (error) {
+      console.log(error.message)
+    }
   }
   //DELETE note
   let deletenote = async (id) => {
     //Todo API call
-    // localhost:5000/api/notes/deletingnotes/63f3342d3408be3321aec848(reference liya hai bas)
+    // localhost:5000/api/notes/deletingnotes/63f3342d3408be3321aec848(reference ke liya hai bas)
     const url = `${host}/deletingnotes/${id}`;
     const requestOptions = {
       method: 'DELETE',
@@ -80,8 +106,10 @@ const NoteState = (props) => {
         'Content-Type': 'application/json'
       },
     };
-
     await fetch(url, requestOptions)
+    // let deletednote= await fetch(url, requestOptions)
+    //     deletednote= await deletednote.json()
+    //     console.log(deletednote.deletednote)     //we don't need to get which note is deleted ,that's why it is commented out.
     setnotes(notes.filter((note) => note._id !== id))
     console.log('Notes deleted having ' + id)
 

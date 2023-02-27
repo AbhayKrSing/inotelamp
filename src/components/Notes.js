@@ -53,20 +53,20 @@ export default function Notes() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                         </div>
                         <div className="modal-body">
-                            <form method='put'>
+                            <form onSubmit={updatenotes}>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">Title</label>
-                                    <input type="text" className="form-control" value={note.title} id="exampleInputEmail1" name='title' aria-describedby="emailHelp" onChange={handlechange} />
+                                    <input type="text" className="form-control" value={note.title} id="exampleInputEmail1" name='title' aria-describedby="emailHelp" onChange={handlechange} required minLength={3} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputPassword1" className="form-label">Description</label>
-                                    <input type="text" className="form-control" value={note.description} id="exampleInputPassword1" name='description' onChange={handlechange} />
+                                    <input type="text" className="form-control" value={note.description} id="exampleInputPassword1" name='description' onChange={handlechange} required minLength={8} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputPassword1" className="form-label">Tag</label>
-                                    <input type="text" className="form-control" value={note.tag} id="exampleInputPassword1" name='tag' onChange={handlechange} />
+                                    <input type="text" className="form-control" value={note.tag} id="exampleInputPassword1" name='tag' onChange={handlechange} required minLength={3}/>
                                 </div>
-                                <button type="submit" className="btn btn-primary" onClick={updatenotes}>Edit Note</button>
+                                <button type="submit" className="btn btn-primary">Edit Note</button>
                             </form>
                         </div>
                         <div className="modal-footer" style={{display:"none"}}>
@@ -76,6 +76,9 @@ export default function Notes() {
                 </div>
             </div>
             <h1 className='text-center m-5'>Your Notes</h1>
+            <div className='fs-5 text-center'>
+                {notes.length===0 ?"No Notes to Display":''}
+            </div>
             <div className="row">
                 {notes.map((element) => {
                     return <Noteitems note={element} Modal={Modal} key={element._id} />

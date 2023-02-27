@@ -20,7 +20,6 @@ export default function Noteitems(props) {
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{description}</p>
                     <p>{tag}</p>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore modi aliquid voluptatibus quod vero nisi commodi atque distinctio reprehenderit ipsam magnam quidem, totam excepturi eligendi? Asperiores molestias totam voluptates natus.</p>
                 </div>
             </div>
         </div>

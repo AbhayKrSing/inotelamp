@@ -64,7 +64,7 @@ const NoteState = (props) => {
     }
   }
   //UPDATE note
-  let updatenote = async ( id,title, description, tag) => {
+  let updatenote = async (id, title, description, tag) => {
     //localhost:5000/api/notes/updatingnotes/63f33b07900a0a74b0462a28(reference ke liye likha hai bas)
     try {
       const response = await fetch(`${host}updatingnotes/${id}`, {
@@ -82,14 +82,20 @@ const NoteState = (props) => {
       })
       const updatenote = await response.json()
       console.log(updatenote)       //we will use it
+
       // Logic to update(Edit) note on a Client side
       for (let i in notes) {
         if (notes[i]._id === id) {
           notes[i].title = title
           notes[i].description = description
           notes[i].tag = tag
+          break
         }
       }
+      // setnotes(notes)  //State variable change nhi detect kar pad rha hai.
+      const newnotes = JSON.parse(JSON.stringify(notes))
+      setnotes(newnotes)         //State variable change detect nhi kar pa rha tha isiliye naya Duplicate banakar setnotes(notes) karna pada.
+
     }
     catch (error) {
       console.log(error.message)

@@ -1,7 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import Notebook from '../context/notes/noteContext'
 const Signup = () => {
+  const {alertEvent}=useContext(Notebook)
   const navigate=useNavigate()
   const [credentials, setcredientials] = useState({name:'',password:'',cpassword:'',email:''})
   let handlechange=(e)=>{
@@ -30,7 +31,7 @@ const Signup = () => {
        navigate('/')
      }   
      else{
-       alert('Invalid credentials')
+      alertEvent('Invalid credentials','danger','Failure')
      }                        
         //TODO--> use history ka use karke redirect karna hai
    } catch (error) {

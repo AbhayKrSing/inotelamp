@@ -59,6 +59,7 @@ const NoteState = (props) => {
       })
       const savednote = await response.json()
       setnotes(notes.concat([savednote]))
+      alertEvent('Notes added successfully','success','Success')
     } catch (error) {
       console.log(error.message)
     }
@@ -95,7 +96,7 @@ const NoteState = (props) => {
       // setnotes(notes)  //State variable change nhi detect kar pad rha hai.
       const newnotes = JSON.parse(JSON.stringify(notes))
       setnotes(newnotes)         //State variable change detect nhi kar pa rha tha isiliye naya Duplicate banakar setnotes(notes) karna pada.
-
+      alertEvent('Notes changed successfully','success','Success:')
     }
     catch (error) {
       console.log(error.message)
@@ -105,20 +106,26 @@ const NoteState = (props) => {
   let deletenote = async (id) => {
     //Todo API call
     // localhost:5000/api/notes/deletingnotes/63f3342d3408be3321aec848(reference ke liya hai bas)
-    const url = `${host}/deletingnotes/${id}`;
-    const requestOptions = {
-      method: 'DELETE',
-      headers: {
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjBkNjE2MzI2MmI1NzQxMTJiNGRhMiIsImlhdCI6MTY3Njg4MjgyNX0.Ln0PeN_0kR9Q24Rx0tAWn5EBB_-Tlfb0hvGdJw4RviI',
-        'Content-Type': 'application/json'
-      },
-    };
-    await fetch(url, requestOptions)
-    // let deletednote= await fetch(url, requestOptions)
-    //     deletednote= await deletednote.json()
-    //     console.log(deletednote.deletednote)     //we don't need to get which note is deleted ,that's why it is commented out.
-    setnotes(notes.filter((note) => note._id !== id))
-    console.log('Notes deleted having ' + id)
+    try {
+      const url = `${host}/deletingnotes/${id}`;
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjBkNjE2MzI2MmI1NzQxMTJiNGRhMiIsImlhdCI6MTY3Njg4MjgyNX0.Ln0PeN_0kR9Q24Rx0tAWn5EBB_-Tlfb0hvGdJw4RviI',
+          'Content-Type': 'application/json'
+        },
+      };
+      await fetch(url, requestOptions)
+      // let deletednote= await fetch(url, requestOptions)
+      //     deletednote= await deletednote.json()
+      //     console.log(deletednote.deletednote)     //we don't need to get which note is deleted ,that's why it is commented out.
+      setnotes(notes.filter((note) => note._id !== id))
+      console.log('Notes deleted having ' + id)
+      alertEvent('Notes Deleted !!','success','Success')
+    } catch (error) {
+      console.log(error.message)
+    }
+
 
   }
 

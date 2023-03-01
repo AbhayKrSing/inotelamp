@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import NoteContext from '../context/notes/noteContext'
 const Login = () => {
+  const {alertEvent}=useContext(NoteContext)
   const navigate = useNavigate();
   const host='http://localhost:5000/api/auth/'
   const [credentials, setcredentials] = useState({ email: '', password: '' })
@@ -26,9 +28,10 @@ try {
     console.log(data)
     localStorage.setItem('Token',data.authtoken)
     navigate('/')
+    alertEvent('Logged in successfully','success','Success')
   }   
   else{
-    alert('Invalid credentials')
+    alertEvent('Invalid credentials','danger','Failure')
   }                        
      //TODO--> use history ka use karke redirect karna hai
 } catch (error) {

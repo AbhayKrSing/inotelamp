@@ -2,10 +2,10 @@ import NoteContext from "./noteContext";
 import { useState } from "react"
 const NoteState = (props) => {
   const [Alert, setAlert] = useState(false)
-  const [message, setmessage] = useState('')
+  const [message, setmessage] = useState({message:'',Class:'',action:''})
   // const [dyanmicUpdate, setdyanmicUpdate] = useState({title:'',description:'',tag:''})
-  let alertEvent = (message) => {
-    setmessage(message)
+  let alertEvent = (message,Class,action) => {
+    setmessage({message,Class,action})
     setAlert(true)
     setTimeout(() => {
       setAlert(false)

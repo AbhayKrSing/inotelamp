@@ -12,7 +12,7 @@ export default function Notes() {
         setnote(note)
     }
     // let {notes,setnotes}=useContext(NoteContext)  //de-structuring of object
-    let { notes, setnotes, getallnotes, updatenote } = useContext(NoteContext)  //de-structuring of object
+    let { notes, setnotes, getallnotes, updatenote,alertEvent } = useContext(NoteContext)  //de-structuring of object
     try {
         useEffect(() => {
             async function fetchData() {
@@ -38,6 +38,7 @@ export default function Notes() {
         e.preventDefault()
         updatenote(note._id, note.title, note.description, note.tag)
         Againref.current.click()
+        alertEvent('Notes changed','success','Success:')
     }
     return (
         <>

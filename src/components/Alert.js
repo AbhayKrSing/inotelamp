@@ -6,8 +6,8 @@ export default function Alert() {
 
     return (
         <> <div style={{height:'30px'}}>
-           {Alert && <div className="alert alert-primary" role="alert">
-               {message}
+           {Alert && <div className={`alert alert-${message.Class}`} role="alert">
+              <strong>{message.action} :</strong> {message.message}
             </div>}
             </div>
         </>

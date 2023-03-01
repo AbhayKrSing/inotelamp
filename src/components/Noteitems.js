@@ -10,11 +10,11 @@ export default function Noteitems(props) {
                 {/* It is very important to know how to call multiple function on same event (given below) */}
                 <i className="fa-sharp fa-solid fa-trash position-absolute position-absolute top-0 end-0 mx-2 mt-3" onClick={() => {
                     deletenote(_id)
-                    alertEvent('deleted !!')
+                    alertEvent('Notes Deleted !!','success','Success')
                 }}></i>
                 <i className="fa-solid fa-pen-to-square position-absolute position-absolute top-0 end-0 mx-5 mt-3" onClick={() => {
-                    alertEvent('Editing')
-                    props.Modal(props.note)
+                    alertEvent('Editing','primary','Progress')
+                    props.Modal(props.note,'primary')
                 }}></i>
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>

@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import NoteContext from '../context/notes/noteContext'
 import AddNote from './AddNote'
 import Noteitems from './Noteitems'
 export default function Notes() {
+    const navigate=useNavigate()
     const [note, setnote] = useState({ title: '', description: '', tag: '' })
     const ref = useRef(null)
     const Againref = useRef(null)
@@ -15,12 +17,17 @@ export default function Notes() {
     let { notes, setnotes, getallnotes, updatenote } = useContext(NoteContext)  //de-structuring of object
     try {
         useEffect(() => {
-            async function fetchData() {
-                const newnotes = await getallnotes()
-                setnotes(newnotes)
+            if(localStorage.getItem('Token')){
+                async function fetchData() {
+                    const newnotes = await getallnotes()
+                    setnotes(newnotes)
+                }
+                fetchData();
             }
-            fetchData();
-            // eslint-disable-next-line
+            else{
+                  navigate('/login')
+            }
+                // eslint-disable-next-line
         }, []);
     } catch (error) {
         console.log(error.message)

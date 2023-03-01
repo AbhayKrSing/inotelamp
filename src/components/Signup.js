@@ -54,10 +54,11 @@ const Signup = () => {
           <label htmlFor="exampleInputPassword1" className="form-label">Confirm Password</label>
           <input type="password" name='cpassword' className="form-control" id="cpassword" value={credentials.cpassword} onChange={handlechange} required min={8}/>
         </div>
-        <div className="mb-3">
+        <div className="">
           <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
           <input type="email" name='email' className="form-control" id="email" value={credentials.email} onChange={handlechange} required/>
         </div>
+        <div id="emailHelp" className="form-text mb-3">We'll never share your email with anyone else.</div>
         
 
         <button type="submit" className="btn btn-primary">Submit</button>

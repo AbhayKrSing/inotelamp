@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const Login = () => {
+  const navigate = useNavigate();
   const host='http://localhost:5000/api/auth/'
   const [credentials, setcredentials] = useState({ email: '', password: '' })
   let handlechange = (e) => {
@@ -21,8 +22,15 @@ try {
     })
   })
   const data=await response.json()
-  console.log(data)                              //TODO--> Need to improve this
-  localStorage.setItem('Token',data.authtoken)   //TODO--> use history ka use karke redirect karna hai
+  if(data.success){
+    console.log(data)
+    localStorage.setItem('Token',data.authtoken)
+    navigate('/')
+  }   
+  else{
+    alert('Invalid credentials')
+  }                        
+     //TODO--> use history ka use karke redirect karna hai
 } catch (error) {
   console.log(error.message)
 }

@@ -2,10 +2,10 @@ import NoteContext from "./noteContext";
 import { useState } from "react"
 const NoteState = (props) => {
   const [Alert, setAlert] = useState(false)
-  const [message, setmessage] = useState({message:'',Class:'',action:''})
+  const [message, setmessage] = useState({ message: '', Class: '', action: '' })
   // const [dyanmicUpdate, setdyanmicUpdate] = useState({title:'',description:'',tag:''})
-  let alertEvent = (message,Class,action) => {
-    setmessage({message,Class,action})
+  let alertEvent = (message, Class, action) => {
+    setmessage({ message, Class, action })
     setAlert(true)
     setTimeout(() => {
       setAlert(false)
@@ -14,7 +14,7 @@ const NoteState = (props) => {
   }
   //http://localhost:5000/api/notes/fetchallnotes
   //GET all notes
-  const host = 'http://localhost:5000/api/notes/'
+  const host = (process.env.PORT || 'http://localhost:5000') + '/api/notes/'
   let getallnotes = async () => {
     const url = `${host}fetchallnotes`;
     const headers = {
@@ -59,7 +59,7 @@ const NoteState = (props) => {
       })
       const savednote = await response.json()
       setnotes(notes.concat([savednote]))
-      alertEvent('Notes added successfully','success','Success')
+      alertEvent('Notes added successfully', 'success', 'Success')
     } catch (error) {
       console.log(error.message)
     }
@@ -96,7 +96,7 @@ const NoteState = (props) => {
       // setnotes(notes)  //State variable change nhi detect kar pad rha hai.
       const newnotes = JSON.parse(JSON.stringify(notes))
       setnotes(newnotes)         //State variable change detect nhi kar pa rha tha isiliye naya Duplicate banakar setnotes(notes) karna pada.
-      alertEvent('Notes changed successfully','success','Success:')
+      alertEvent('Notes changed successfully', 'success', 'Success:')
     }
     catch (error) {
       console.log(error.message)
@@ -121,7 +121,7 @@ const NoteState = (props) => {
       //     console.log(deletednote.deletednote)     //we don't need to get which note is deleted ,that's why it is commented out.
       setnotes(notes.filter((note) => note._id !== id))
       console.log('Notes deleted having ' + id)
-      alertEvent('Notes Deleted !!','success','Success')
+      alertEvent('Notes Deleted !!', 'success', 'Success')
     } catch (error) {
       console.log(error.message)
     }

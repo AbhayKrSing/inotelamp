@@ -14,7 +14,7 @@ const NoteState = (props) => {
   }
   //http://localhost:5000/api/notes/fetchallnotes
   //GET all notes
-  const host = (process.env.PORT || 'http://localhost:5000') + '/api/notes/'
+  const host = (process.env.REACT_APP_PORT || 'http://localhost:5000') + '/api/notes/'
   let getallnotes = async () => {
     const url = `${host}fetchallnotes`;
     const headers = {
